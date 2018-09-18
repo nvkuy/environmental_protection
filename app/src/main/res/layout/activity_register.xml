@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.nguyenvukhanhuygmail.environmental_protection.authentication.RegisterActivity">
+
+    <ScrollView
+        android:layout_margin="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/user_name_text_field"
+                android:layout_marginBottom="10dp"
+                android:hint="@string/user_name_text_field_hint"
+                android:drawablePadding="5dp"
+                android:padding="10dp"
+                android:textSize="18dp"
+                android:drawableLeft="@drawable/ic_person_black_24dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:id="@+id/phone_number_field"
+                android:layout_marginBottom="10dp"
+                android:hint="@string/phone_number_field_hint"
+                android:drawablePadding="5dp"
+                android:padding="10dp"
+                android:inputType="phone"
+                android:textSize="18dp"
+                android:drawableLeft="@drawable/ic_contact_phone_black_24dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:layout_marginBottom="10dp"
+                android:weightSum="2"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Spinner
+                    android:id="@+id/sex_spinner"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+
+                </Spinner>
+
+                <Spinner
+                    android:id="@+id/account_type_spinner"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+
+                </Spinner>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/place_picker_field"
+                android:layout_marginBottom="10dp"
+                android:hint="@string/place_text_field_hint"
+                android:drawablePadding="5dp"
+                android:padding="10dp"
+                android:textSize="18dp"
+                android:drawableLeft="@drawable/ic_location_on_black_24dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:id="@+id/email_text_field"
+                android:layout_marginBottom="10dp"
+                android:hint="@string/email_text_field_hint"
+                android:drawablePadding="5dp"
+                android:padding="10dp"
+                android:inputType="textEmailAddress"
+                android:textSize="18dp"
+                android:drawableLeft="@drawable/ic_email_black_24dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:id="@+id/password_text_field"
+                android:layout_marginBottom="10dp"
+                android:hint="@string/password_field_hint"
+                android:drawablePadding="5dp"
+                android:padding="10dp"
+                android:inputType="textPassword"
+                android:textSize="18dp"
+                android:drawableLeft="@drawable/ic_vpn_key_black_24dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:id="@+id/repassword_text_field"
+                android:layout_marginBottom="10dp"
+                android:hint="@string/repassword_text_field_hint"
+                android:drawablePadding="5dp"
+                android:padding="10dp"
+                android:inputType="textPassword"
+                android:textSize="18dp"
+                android:drawableLeft="@drawable/ic_vpn_key_black_24dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:textColor="@color/white"
+                android:background="@drawable/auth_button"
+                android:text="@string/register_button"
+                android:layout_marginHorizontal="30dp"
+                android:id="@+id/register_button"
+                android:layout_marginTop="40dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

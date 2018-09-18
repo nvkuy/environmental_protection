@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "39798808873",
+    "firebase_url": "https://environmental-protection-66052.firebaseio.com",
+    "project_id": "environmental-protection-66052",
+    "storage_bucket": "environmental-protection-66052.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:39798808873:android:c43b431de0d507b8",
+        "android_client_info": {
+          "package_name": "com.nguyenvukhanhuygmail.environmental_protection"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "39798808873-liskskun8ve1o8n1lov1id4g5sl7p2am.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nguyenvukhanhuygmail.environmental_protection",
+            "certificate_hash": "8ae66e51c199e8051a6084dcaacd3912f67bd4e9"
+          }
+        },
+        {
+          "client_id": "39798808873-4q9c9qumjncghkdqe9c8v3a4kjq8h1ke.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8IzdBFH9YieG0J9BjryppsHfyizL0gEU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "39798808873-4q9c9qumjncghkdqe9c8v3a4kjq8h1ke.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

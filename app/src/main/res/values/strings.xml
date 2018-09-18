@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Chung tay bảo vệ môi trường</string>
+    <string name="register_title">Đăng kí tài khoản mới</string>
+    <string name="login_button">Đăng nhập ngay!</string>
+    <string name="register_button">Đăng ký ngay!</string>
+    <string name="gotoRegister_button">Chưa có tài khoản? Tạo mới!</string>
+    <string name="email_text_field_hint">Email</string>
+    <string name="password_text_field_hint">Mật khẩu</string>
+    <string name="password_field_hint">Mật khẩu (tối thiểu 6 kí tự)</string>
+    <string name="user_name_text_field_hint">Tên người dùng</string>
+    <string name="repassword_text_field_hint">Nhập lại mật khẩu</string>
+    <string name="phone_number_field_hint">Số điện thoại</string>
+    <string name="place_text_field_hint">Chạm để chọn vị trí</string>
+    <string name="google_place_api">AIzaSyDd5JzsCLsZZFPkl-f5Kyw83yU52EoWKLo</string>
+</resources>
