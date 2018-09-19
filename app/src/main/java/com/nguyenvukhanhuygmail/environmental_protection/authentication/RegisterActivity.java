@@ -16,10 +16,11 @@ import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.nguyenvukhanhuygmail.environmental_protection.MainActivity;
@@ -56,6 +57,8 @@ public class RegisterActivity extends AppCompatActivity {
             "Đơn vị chức năng"
     };
 
+    boolean isFirst = true;
+
     final Pattern email_pattern = Pattern.compile("^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
 
     private final int PLACE_PICKER_REQUEST = 1;
@@ -72,7 +75,7 @@ public class RegisterActivity extends AppCompatActivity {
         onButtonClick();
     }
 
-    private void saveInfo(FirebaseUser user) {
+    private void saveInfoAndGotoMainAct(String uID) {
         Map<String, String> mUser = new HashMap<>();
         mUser.put("user_name", email_field.getText().toString());
         mUser.put("phone_number", phone_number_field.getText().toString());
@@ -80,7 +83,20 @@ public class RegisterActivity extends AppCompatActivity {
         mUser.put("acc_type", acc_type_spinner.getSelectedItem().toString());
         mUser.put("location", place_picker_field.getText().toString());
 
-        mDatabase.child("Users").child(user.getUid()).setValue(mUser);
+        mDatabase.child("Users").child(uID).setValue(mUser)
+            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    toastMsg("Cập nhật hồ sơ người dùng thành công!");
+                    gotoMainAct();
+                }
+            })
+            .addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    toastMsg("Cập nhật hồ sơ người dùng thất bại!");
+                }
+            });
     }
 
     private void onButtonClick() {
@@ -114,12 +130,16 @@ public class RegisterActivity extends AppCompatActivity {
                             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
-                                    if (task.isSuccessful()) {
-//                                        Log.d("uID", mAuth.getCurrentUser().getUid());
-                                        saveInfo(mAuth.getCurrentUser());
-                                        gotoMainAct();
+                                    if (isFirst) {
+                                        if (task.isSuccessful()) {
+                                            //                                        Log.d("uID", mAuth.getCurrentUser().getUid());
+                                            isFirst = false;
+                                            saveInfoAndGotoMainAct(mAuth.getCurrentUser().getUid());
+                                        } else {
+                                            toastMsg("Lỗi tạo tài khoản");
+                                        }
                                     } else {
-                                        toastMsg("Lỗi tạo tài khoản");
+                                        saveInfoAndGotoMainAct(mAuth.getCurrentUser().getUid());
                                     }
                                 }
                             });
