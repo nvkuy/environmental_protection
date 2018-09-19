@@ -25,9 +25,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.nguyenvukhanhuygmail.environmental_protection.MainActivity;
 import com.nguyenvukhanhuygmail.environmental_protection.R;
+import com.nguyenvukhanhuygmail.environmental_protection.model.User;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -76,12 +75,19 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void saveInfoAndGotoMainAct(String uID) {
-        Map<String, String> mUser = new HashMap<>();
-        mUser.put("user_name", email_field.getText().toString());
-        mUser.put("phone_number", phone_number_field.getText().toString());
-        mUser.put("sex", sex_spinner.getSelectedItem().toString());
-        mUser.put("acc_type", acc_type_spinner.getSelectedItem().toString());
-        mUser.put("location", place_picker_field.getText().toString());
+//        Map<String, String> mUser = new HashMap<>();
+//        mUser.put("user_name", user_name_text_field.getText().toString());
+//        mUser.put("phone_number", phone_number_field.getText().toString());
+//        mUser.put("sex", sex_spinner.getSelectedItem().toString());
+//        mUser.put("acc_type", acc_type_spinner.getSelectedItem().toString());
+//        mUser.put("location", place_picker_field.getText().toString());
+
+        User mUser = new User(
+                acc_type_spinner.getSelectedItem().toString(),
+                place_picker_field.getText().toString(),
+                phone_number_field.getText().toString(),
+                sex_spinner.getSelectedItem().toString(),
+                user_name_text_field.getText().toString());
 
         mDatabase.child("Users").child(uID).setValue(mUser)
             .addOnSuccessListener(new OnSuccessListener<Void>() {

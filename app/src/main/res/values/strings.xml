@@ -12,4 +12,12 @@
     <string name="phone_number_field_hint">Số điện thoại</string>
     <string name="place_text_field_hint">Chạm để chọn vị trí</string>
     <string name="google_place_api">AIzaSyDd5JzsCLsZZFPkl-f5Kyw83yU52EoWKLo</string>
+    <string name="problem_title">Tiêu đề vấn đề</string>
+    <string name="describe_problem">Mô tả vấn đề</string>
+    <string name="AddImage">Chạm để thêm ảnh</string>
+    <string name="add_problem_button">Xác nhận</string>
+    <string name="add_problem">Thêm mới vấn đề</string>
+    <string name="PickOrTakeDialogMsg">Bạn muốn chụp hay chọn ảnh?</string>
+    <string name="TakeButton">Chụp ảnh</string>
+    <string name="PickButton">Chọn ảnh</string>
 </resources>
