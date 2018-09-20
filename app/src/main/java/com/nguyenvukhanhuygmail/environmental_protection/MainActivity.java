@@ -43,7 +43,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void gotoAddProblemAct() {
-        startActivity(new Intent(getApplication(), AddProblemActivity.class));
+        Intent i = new Intent(getApplication(), AddProblemActivity.class);
+        i.putExtra("uID", user.getUid());
+        startActivity(i);
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
     }
 

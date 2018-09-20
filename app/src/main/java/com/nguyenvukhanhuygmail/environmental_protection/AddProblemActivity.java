@@ -3,8 +3,10 @@ package com.nguyenvukhanhuygmail.environmental_protection;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,15 +15,23 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.ui.PlacePicker;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.nguyenvukhanhuygmail.environmental_protection.adapter.Problem_image_adapter;
-import com.nguyenvukhanhuygmail.environmental_protection.ultil.RecyclerItemClickListener;
+import com.nguyenvukhanhuygmail.environmental_protection.model.Problem;
+import com.nguyenvukhanhuygmail.environmental_protection.util.RecyclerItemClickListener;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class AddProblemActivity extends AppCompatActivity {
@@ -38,6 +48,18 @@ public class AddProblemActivity extends AppCompatActivity {
     private int index = 0;
 
     private final int PLACE_PICKER_REQUEST = 1, IMAGE_PICKER_REQUEST = 2, IMAGE_TAKER_REQUEST = 3;
+
+    enum AddProblemState {
+        null_header,
+        null_describe,
+        null_location,
+        null_image,
+        ok
+    }
+
+    String uID;
+
+    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,9 +90,16 @@ public class AddProblemActivity extends AppCompatActivity {
             if (requestCode == PLACE_PICKER_REQUEST) {
                 tv_location.setText(PlacePicker.getPlace(data, this).getName());
             } else if (requestCode == IMAGE_PICKER_REQUEST) {
-                addImageToRV(data);
+                Uri image_uri = data.getData();
+                try {
+                    Bitmap bmp = MediaStore.Images.Media.getBitmap(this.getContentResolver(), image_uri);
+                    addImageToRV(bmp);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             } else if (requestCode == IMAGE_TAKER_REQUEST) {
-                addImageToRV(data);
+                Bitmap bmp = (Bitmap) data.getExtras().get("data");
+                addImageToRV(bmp);
             } else {
 
             }
@@ -78,8 +107,7 @@ public class AddProblemActivity extends AppCompatActivity {
 
     }
 
-    private void addImageToRV(Intent data) {
-        Bitmap bmp = (Bitmap) data.getExtras().get("data");
+    private void addImageToRV(Bitmap bmp) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
         byte[] image = stream.toByteArray();
@@ -89,8 +117,34 @@ public class AddProblemActivity extends AppCompatActivity {
         } else {
             image_problem.add(image);
         }
-        problem_image_adapter = new Problem_image_adapter(image_problem);
-        rv_image_problem.setAdapter(problem_image_adapter);
+        updateRV();
+    }
+
+    private void addProblemAndBackToMainAct(String uID) {
+        String date = Calendar.getInstance().getTime().toString();
+        Problem problem = new Problem(
+                header_field.getText().toString(),
+                describe_field.getText().toString(),
+                String.valueOf(image_problem),
+                date,
+                false,
+                tv_location.getText().toString(),
+                uID
+        );
+        mDatabase.child("Problems").setValue(problem)
+            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    toastMsg("Thêm vấn đề thành công!");
+                    finish();
+                }
+            })
+            .addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    toastMsg("Thêm vấn đề thất bại!");
+                }
+            });
     }
 
     private void takePhoto(int code) {
@@ -98,6 +152,10 @@ public class AddProblemActivity extends AppCompatActivity {
         Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(i, code);
 
+    }
+
+    private void toastMsg(String msg) {
+        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
     }
 
     private void choosePhoto(int code) {
@@ -138,9 +196,23 @@ public class AddProblemActivity extends AppCompatActivity {
                 takePhoto(IMAGE_TAKER_REQUEST);
             }
         });
+        if (title.equals("Thay đổi ảnh") && !image_problem.isEmpty()) {
+            builder.setNeutralButton("Xóa ảnh", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    image_problem.remove(index);
+                    updateRV();
+                }
+            });
+        }
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
 
+    }
+
+    private void updateRV() {
+        problem_image_adapter = new Problem_image_adapter(image_problem);
+        rv_image_problem.setAdapter(problem_image_adapter);
     }
 
     private void onButtonClick() {
@@ -169,15 +241,57 @@ public class AddProblemActivity extends AppCompatActivity {
         submit_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                AddProblemState state = isOk();
+                if (state == AddProblemState.ok) {
+                    addProblemAndBackToMainAct(uID);
+                } else {
+                    switch (state) {
+                        case null_header:
+                            toastMsg("Tiêu đề không được bỏ trống!");
+                            break;
+                        case null_describe:
+                            toastMsg("Mô tả không được bỏ trống");
+                            break;
+                        case null_image:
+                            toastMsg("Vấn đề không đáng tin, cần có ít nhất 1 ảnh");
+                            break;
+                        case null_location:
+                            toastMsg("Vấn đề không đáng tin, cần vị trí");
+                            break;
+                        default:
+                            break;
+                    }
+                }
             }
         });
 
     }
 
+    private AddProblemState isOk() {
+
+        if (header_field.getText().toString().equals(""))
+            return AddProblemState.null_header;
+
+        if (describe_field.getText().toString().equals(""))
+            return AddProblemState.null_describe;
+
+        if (tv_location.getText().toString().equals(""))
+            return AddProblemState.null_location;
+
+        if (image_problem.isEmpty())
+            return AddProblemState.null_image;
+
+        return AddProblemState.ok;
+    }
+
     private void start() {
 
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
         getSupportActionBar().setTitle(R.string.add_problem);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        uID = getIntent().getStringExtra("uID");
 
         rv_image_problem = (RecyclerView) findViewById(R.id.rv_image_problem);
         rv_image_problem.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));

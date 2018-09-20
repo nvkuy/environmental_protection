@@ -1,4 +1,4 @@
-package com.nguyenvukhanhuygmail.environmental_protection.ultil;
+package com.nguyenvukhanhuygmail.environmental_protection.util;
 
 /**
  * Created by Uy Nguyen on 9/20/2018.

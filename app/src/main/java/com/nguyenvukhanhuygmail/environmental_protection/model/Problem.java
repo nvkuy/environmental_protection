@@ -1,7 +1,5 @@
 package com.nguyenvukhanhuygmail.environmental_protection.model;
 
-import java.util.List;
-
 /**
  * Created by Uy Nguyen on 9/19/2018.
  */
@@ -10,8 +8,8 @@ public class Problem {
 
     private String title;
     private String describe;
-    private List<byte[]> images;
-    private int image_num;
+//    private List<byte[]> images;
+    private String images;
     private String date;
     private boolean state;
     private String location;
@@ -20,11 +18,10 @@ public class Problem {
     public Problem() {
     }
 
-    public Problem(String title, String describe, List<byte[]> images, int image_num, String date, boolean state, String location, String uID) {
+    public Problem(String title, String describe, String images, String date, boolean state, String location, String uID) {
         this.title = title;
         this.describe = describe;
         this.images = images;
-        this.image_num = image_num;
         this.date = date;
         this.state = state;
         this.location = location;
@@ -49,21 +46,12 @@ public class Problem {
         return this;
     }
 
-    public List<byte[]> getImages() {
+    public String getImages() {
         return images;
     }
 
-    public Problem setImages(List<byte[]> images) {
+    public Problem setImages(String images) {
         this.images = images;
-        return this;
-    }
-
-    public int getImage_num() {
-        return image_num;
-    }
-
-    public Problem setImage_num(int image_num) {
-        this.image_num = image_num;
         return this;
     }
 
