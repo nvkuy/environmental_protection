@@ -34,7 +34,7 @@
                 android:hint="@string/describe_problem"
                 android:drawablePadding="5dp"
                 android:padding="10dp"
-                android:inputType="text"
+                android:inputType="textMultiLine"
                 android:textSize="18dp"
                 android:drawableLeft="@drawable/ic_short_text_black_24dp"
                 android:layout_width="match_parent"
@@ -64,6 +64,7 @@
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_image_problem"
+                android:scrollbars="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 

@@ -17,7 +17,7 @@
     <string name="AddImage">Chạm để thêm ảnh</string>
     <string name="add_problem_button">Xác nhận</string>
     <string name="add_problem">Thêm mới vấn đề</string>
-    <string name="PickOrTakeDialogMsg">Bạn muốn chụp hay chọn ảnh?</string>
-    <string name="TakeButton">Chụp ảnh</string>
-    <string name="PickButton">Chọn ảnh</string>
+    <!--<string name="PickOrTakeDialogMsg">Bạn muốn chụp hay chọn ảnh?</string>-->
+    <!--<string name="TakeButton">Chụp ảnh</string>-->
+    <!--<string name="PickButton">Chọn ảnh</string>-->
 </resources>
