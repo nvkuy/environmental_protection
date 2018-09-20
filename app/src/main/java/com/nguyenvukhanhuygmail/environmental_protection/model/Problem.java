@@ -8,8 +8,7 @@ public class Problem {
 
     private String title;
     private String describe;
-//    private List<byte[]> images;
-    private String images;
+    private String image_code;
     private String date;
     private boolean state;
     private String location;
@@ -18,10 +17,10 @@ public class Problem {
     public Problem() {
     }
 
-    public Problem(String title, String describe, String images, String date, boolean state, String location, String uID) {
+    public Problem(String title, String describe, String date, boolean state, String location, String uID) {
         this.title = title;
         this.describe = describe;
-        this.images = images;
+        this.image_code = uID + date;
         this.date = date;
         this.state = state;
         this.location = location;
@@ -46,13 +45,8 @@ public class Problem {
         return this;
     }
 
-    public String getImages() {
-        return images;
-    }
-
-    public Problem setImages(String images) {
-        this.images = images;
-        return this;
+    public String getImage_code() {
+        return image_code;
     }
 
     public String getDate() {

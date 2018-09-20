@@ -22,8 +22,12 @@ import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.nguyenvukhanhuygmail.environmental_protection.adapter.Problem_image_adapter;
 import com.nguyenvukhanhuygmail.environmental_protection.model.Problem;
 import com.nguyenvukhanhuygmail.environmental_protection.util.RecyclerItemClickListener;
@@ -60,6 +64,7 @@ public class AddProblemActivity extends AppCompatActivity {
     String uID;
 
     private DatabaseReference mDatabase;
+    private FirebaseStorage storage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,22 +126,21 @@ public class AddProblemActivity extends AppCompatActivity {
     }
 
     private void addProblemAndBackToMainAct(String uID) {
-        String date = Calendar.getInstance().getTime().toString();
-        Problem problem = new Problem(
+
+        final Problem problem = new Problem(
                 header_field.getText().toString(),
                 describe_field.getText().toString(),
-                String.valueOf(image_problem),
-                date,
+                Calendar.getInstance().getTime().toString(),
                 false,
                 tv_location.getText().toString(),
                 uID
         );
-        mDatabase.child("Problems").setValue(problem)
+        mDatabase.child("Problems").push().setValue(problem)
             .addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
+                    uploadImage(problem.getImage_code());
                     toastMsg("Thêm vấn đề thành công!");
-                    finish();
                 }
             })
             .addOnFailureListener(new OnFailureListener() {
@@ -267,6 +271,26 @@ public class AddProblemActivity extends AppCompatActivity {
 
     }
 
+    private void uploadImage(String image_code) {
+        StorageReference storageRef = storage.getReference();
+        StorageReference imageRef = storageRef.child("ProblemImage").child(image_code);
+        for(byte[] image : image_problem) {
+            UploadTask uploadTask = imageRef.putBytes(image);
+            uploadTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    toastMsg("Lưu ảnh thất bại!");
+                }
+            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    toastMsg("Lưu ảnh thành công!");
+                    finish();
+                }
+            });
+        }
+    }
+
     private AddProblemState isOk() {
 
         if (header_field.getText().toString().equals(""))
@@ -287,11 +311,12 @@ public class AddProblemActivity extends AppCompatActivity {
     private void start() {
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
+        storage = FirebaseStorage.getInstance();
 
         getSupportActionBar().setTitle(R.string.add_problem);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        uID = getIntent().getStringExtra("uID");
+        uID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         rv_image_problem = (RecyclerView) findViewById(R.id.rv_image_problem);
         rv_image_problem.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));

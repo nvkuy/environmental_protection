@@ -66,7 +66,7 @@ public class LoginActivity extends AppCompatActivity {
                                 if (task.isSuccessful()) {
                                     gotoMainAct();
                                 } else {
-                                    toastMsg("Lỗi tạo tài khoản");
+                                    toastMsg("Lỗi đăng nhập!");
                                 }
                             }
                         });
