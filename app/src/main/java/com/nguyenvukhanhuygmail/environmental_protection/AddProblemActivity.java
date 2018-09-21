@@ -133,6 +133,7 @@ public class AddProblemActivity extends AppCompatActivity {
                 Calendar.getInstance().getTime().toString(),
                 false,
                 tv_location.getText().toString(),
+                image_problem.size(),
                 uID
         );
         mDatabase.child("Problems").push().setValue(problem)
@@ -274,8 +275,9 @@ public class AddProblemActivity extends AppCompatActivity {
     private void uploadImage(String image_code) {
         StorageReference storageRef = storage.getReference();
         StorageReference imageRef = storageRef.child("ProblemImage").child(image_code);
-        for(byte[] image : image_problem) {
-            UploadTask uploadTask = imageRef.putBytes(image);
+        for(int i = 1; i <= image_problem.size(); i++) {
+            byte[] image = image_problem.get(i - 1);
+            UploadTask uploadTask = imageRef.child(String.valueOf(i)).putBytes(image);
             uploadTask.addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception exception) {

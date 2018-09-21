@@ -1,18 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.nguyenvukhanhuygmail.environmental_protection.MainActivity">
 
-    <ListView
-        android:id="@+id/lv_problems"
+    <android.support.v7.widget.RecyclerView
+        android:visibility="visible"
+        android:scrollbars="vertical"
+        android:id="@+id/rv_problems"
         android:layout_margin="15dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    </ListView>
+    </android.support.v7.widget.RecyclerView>
+
+    <TextView
+        android:text="@string/null_problem"
+        android:textSize="30sp"
+        android:gravity="center"
+        android:visibility="gone"
+        android:id="@+id/tv_null_problem"
+        android:layout_margin="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </TextView>
 
     <android.support.design.widget.FloatingActionButton
         android:src="@drawable/ic_add_primary_24dp"

@@ -12,18 +12,20 @@ public class Problem {
     private String date;
     private boolean state;
     private String location;
+    private int image_num;
     private String uID;
 
     public Problem() {
     }
 
-    public Problem(String title, String describe, String date, boolean state, String location, String uID) {
+    public Problem(String title, String describe, String date, boolean state, String location, int image_num, String uID) {
         this.title = title;
         this.describe = describe;
         this.image_code = uID + date;
         this.date = date;
         this.state = state;
         this.location = location;
+        this.image_num = image_num;
         this.uID = uID;
     }
 
@@ -47,6 +49,15 @@ public class Problem {
 
     public String getImage_code() {
         return image_code;
+    }
+
+    public int getImage_num() {
+        return image_num;
+    }
+
+    public Problem setImage_num(int image_num) {
+        this.image_num = image_num;
+        return this;
     }
 
     public String getDate() {

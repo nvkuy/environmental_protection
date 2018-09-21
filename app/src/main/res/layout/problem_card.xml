@@ -20,11 +20,44 @@
             android:orientation="vertical"
             android:layout_width="0dp"
             android:layout_height="match_parent">
-            
+
+            <TextView
+                android:id="@+id/tv_header"
+                android:singleLine="true"
+                android:textSize="19sp"
+                android:text="Tiêu đề"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="3dp"
+                android:textStyle="bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tv_describe"
+                android:singleLine="true"
+                android:textSize="15sp"
+                android:text="Mô tả"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tv_location"
+                android:singleLine="true"
+                android:textSize="14sp"
+                android:text="Địa điểm"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginBottom="4dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 
         <CheckBox
+            android:id="@+id/isDone"
             android:layout_gravity="center"
             android:layout_weight="1"
             android:layout_width="0dp"
