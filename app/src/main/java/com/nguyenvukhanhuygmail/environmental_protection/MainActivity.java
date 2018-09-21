@@ -9,6 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -64,13 +66,19 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateRV() {
         showTvOrRv();
-        problemAdapter = new ProblemAdapter(problemList, user.getAcc_type(), dbRef, sRef);
+        final LayoutAnimationController controller =
+                AnimationUtils.loadLayoutAnimation(this, R.anim.layout_slide_from_bottom);
+        rv_problems.setLayoutAnimation(controller);
+        problemAdapter = new ProblemAdapter(problemList, user.getAcc_type(), dbRef, sRef, uID);
         rv_problems.setAdapter(problemAdapter);
+        rv_problems.scheduleLayoutAnimation();
+
     }
 
     private void setupLvProblem() {
 
-        dbRef.child("Problems").addChildEventListener(new ChildEventListener() {
+        //
+        dbRef.child("Problems").child(uID).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Problem problem = dataSnapshot.getValue(Problem.class);

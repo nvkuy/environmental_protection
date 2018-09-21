@@ -4,7 +4,7 @@
 
     <translate
         android:interpolator="@android:anim/accelerate_decelerate_interpolator"
-        android:fromYDelta="50%p"
+        android:fromYDelta="40%p"
         android:toYDelta="0"/>
 
     <alpha
@@ -16,8 +16,8 @@
         android:interpolator="@android:anim/accelerate_decelerate_interpolator"
         android:pivotY="50%"
         android:pivotX="50%"
-        android:fromXScale="80%"
-        android:fromYScale="80%"
+        android:fromXScale="85%"
+        android:fromYScale="85%"
         android:toXScale="100%"
         android:toYScale="100%"/>
 

@@ -24,15 +24,16 @@ import java.util.List;
 public class ProblemAdapter extends RecyclerView.Adapter<ProblemAdapter.ProblemViewHolder> {
 
     List<Problem> problemList;
-    String acc_type;
+    String acc_type, uID;
     DatabaseReference mDatabase;
     StorageReference storageRef;
 
-    public ProblemAdapter(List<Problem> problemList, String acc_type, DatabaseReference mDatabase, StorageReference storageRef) {
+    public ProblemAdapter(List<Problem> problemList, String acc_type, DatabaseReference mDatabase, StorageReference storageRef, String uID) {
         this.problemList = problemList;
         this.acc_type = acc_type;
         this.mDatabase = mDatabase;
         this.storageRef = storageRef;
+        this.uID = uID;
     }
 
     @NonNull
@@ -59,8 +60,8 @@ public class ProblemAdapter extends RecyclerView.Adapter<ProblemAdapter.ProblemV
                         mDatabase
                                 .getRoot()
                                 .child("Problems")
-                                .orderByChild("image_code")
-                                .equalTo(problemList.get(position).getImage_code())
+                                .child(uID)
+                                .child(problemList.get(position).getDate())
                                 .getRef()
                                 .removeValue();
                         StorageReference imageRef = storageRef

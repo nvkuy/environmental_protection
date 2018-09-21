@@ -136,7 +136,7 @@ public class AddProblemActivity extends AppCompatActivity {
                 image_problem.size(),
                 uID
         );
-        mDatabase.child("Problems").push().setValue(problem)
+        mDatabase.child("Problems").child(uID).child(Calendar.getInstance().getTime().toString()).setValue(problem)
             .addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
