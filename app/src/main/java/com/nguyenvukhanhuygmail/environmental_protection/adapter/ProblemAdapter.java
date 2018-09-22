@@ -48,7 +48,6 @@ public class ProblemAdapter extends RecyclerView.Adapter<ProblemAdapter.ProblemV
         setTextCustom(holder.tv_header, problemList.get(position).getTitle());
         setTextCustom(holder.tv_describe, problemList.get(position).getDescribe());
         setTextCustom(holder.tv_location, problemList.get(position).getLocation());
-        holder.isDone.setChecked(problemList.get(position).isState());
         holder.isDone.setVisibility(View.GONE);
         if (acc_type.equals("Người dân")) {
             holder.isDone.setVisibility(View.VISIBLE);

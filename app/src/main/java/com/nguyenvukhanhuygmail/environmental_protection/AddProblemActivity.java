@@ -131,12 +131,11 @@ public class AddProblemActivity extends AppCompatActivity {
                 header_field.getText().toString(),
                 describe_field.getText().toString(),
                 Calendar.getInstance().getTime().toString(),
-                false,
                 tv_location.getText().toString(),
                 image_problem.size(),
                 uID
         );
-        mDatabase.child("Problems").child(uID).child(Calendar.getInstance().getTime().toString()).setValue(problem)
+        mDatabase.child("Problems").child(uID).child(problem.getDate()).setValue(problem)
             .addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
