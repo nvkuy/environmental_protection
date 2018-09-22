@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton add_problem;
 
     List<Problem> problemList = new ArrayList<>();
+    List<String> uIDs = new ArrayList<>();
     ProblemAdapter problemAdapter;
 
     @Override
@@ -98,7 +99,12 @@ public class MainActivity extends AppCompatActivity {
 //            problemRef = dbRef.child("Problems");
 //        }
         problemList.clear();
-        if (user.getAcc_type().equals("Người dân")) { //nếu đăng nhập dưới quyền người dân
+        if (user.getAcc_type().equals("Người dân")) {
+            uIDs.clear();
+            uIDs.add(uID);
+        }
+
+        for (String uID : uIDs) {
             dbRef.getRoot().child("Problems").child(uID).addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
@@ -131,46 +137,121 @@ public class MainActivity extends AppCompatActivity {
 
                 }
             });
-        } else { //nếu đăng nhập dưới quyền đơn vị chức năng
-            dbRef.getRoot().child("Problems").addChildEventListener(new ChildEventListener() {
-                @Override
-                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                    for (DataSnapshot uIDs : dataSnapshot.getChildren()) {
-                        Problem problem = uIDs.getValue(Problem.class);
-                        problemList.add(problem);
-                        updateRV();
-                    }
-                }
-
-                @Override
-                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                    for (DataSnapshot uIDs : dataSnapshot.getChildren()) {
-                        Problem problem = uIDs.getValue(Problem.class);
-                        problemList.set(findItem(problem.getImage_code()), problem);
-                        updateRV();
-                    }
-                }
-
-                @Override
-                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-                    for (DataSnapshot uIDs : dataSnapshot.getChildren()) {
-                        Problem problem = uIDs.getValue(Problem.class);
-                        problemList.remove(findItem(problem.getImage_code()));
-                        updateRV();
-                    }
-                }
-
-                @Override
-                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
         }
+
+//        if (user.getAcc_type().equals("Người dân")) { //nếu đăng nhập dưới quyền người dân
+//            dbRef.getRoot().child("Problems").child(uID).addChildEventListener(new ChildEventListener() {
+//                @Override
+//                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//                    Problem problem = dataSnapshot.getValue(Problem.class);
+//                    problemList.add(problem);
+//                    updateRV();
+//                }
+//
+//                @Override
+//                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//                    Problem problem = dataSnapshot.getValue(Problem.class);
+//                    problemList.set(findItem(problem.getImage_code()), problem);
+//                    updateRV();
+//                }
+//
+//                @Override
+//                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+//                    Problem problem = dataSnapshot.getValue(Problem.class);
+//                    problemList.remove(findItem(problem.getImage_code()));
+//                    updateRV();
+//                }
+//
+//                @Override
+//                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//
+//                }
+//
+//                @Override
+//                public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//                }
+//            });
+//        } else { //nếu đăng nhập dưới quyền đơn vị chức năng
+//            for (String uID : uIDs) {
+//                dbRef.getRoot().child("Problems").child(uID).addChildEventListener(new ChildEventListener() {
+//                    @Override
+//                    public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//                        Problem problem = dataSnapshot.getValue(Problem.class);
+//                        problemList.add(problem);
+//                        updateRV();
+//                    }
+//
+//                    @Override
+//                    public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//                        Problem problem = dataSnapshot.getValue(Problem.class);
+//                        problemList.set(findItem(problem.getImage_code()), problem);
+//                        updateRV();
+//                    }
+//
+//                    @Override
+//                    public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+//                        Problem problem = dataSnapshot.getValue(Problem.class);
+//                        problemList.remove(findItem(problem.getImage_code()));
+//                        updateRV();
+//                    }
+//
+//                    @Override
+//                    public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//                    }
+//                });
+//            }
+////            dbRef.getRoot().child("Problems").addChildEventListener(new ChildEventListener() {
+////                @Override
+////                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+////                    for (DataSnapshot uIDs : dataSnapshot.getChildren()) {
+////                        for (DataSnapshot date : uIDs.getChildren()) {
+////                            Problem problem = date.getValue(Problem.class);
+////                            problemList.add(problem);
+////                            updateRV();
+////                        }
+////                    }
+////                }
+////
+////                @Override
+////                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+////                    for (DataSnapshot uIDs : dataSnapshot.getChildren()) {
+////                        for (DataSnapshot date : uIDs.getChildren()) {
+////                            Problem problem = date.getValue(Problem.class);
+////                            problemList.set(findItem(problem.getImage_code()), problem);
+////                            updateRV();
+////                        }
+////                    }
+////                }
+////
+////                @Override
+////                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+////                    for (DataSnapshot uIDs : dataSnapshot.getChildren()) {
+////                        for (DataSnapshot date : uIDs.getChildren()) {
+////                            Problem problem = date.getValue(Problem.class);
+////                            problemList.remove(findItem(problem.getImage_code()));
+////                            updateRV();
+////                        }
+////                    }
+////                }
+////
+////                @Override
+////                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+////
+////                }
+////
+////                @Override
+////                public void onCancelled(@NonNull DatabaseError databaseError) {
+////
+////                }
+////            });
+//        }
 
     }
 
@@ -198,7 +279,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onSupportNavigateUp(){
+    public boolean onSupportNavigateUp() {
         mAuth.signOut();
         finish();
         return true;
@@ -223,6 +304,33 @@ public class MainActivity extends AppCompatActivity {
         rv_problems.setLayoutManager(new LinearLayoutManager(this));
         tv_null_problem = (TextView) findViewById(R.id.tv_null_problem);
         add_problem = (FloatingActionButton) findViewById(R.id.add_problem);
+
+        dbRef.child("uIDs").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                uIDs.add(dataSnapshot.getValue(String.class));
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                uIDs.remove(dataSnapshot.getValue(String.class));
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         dbRef.child("Users").child(uID).addValueEventListener(new ValueEventListener() {
             @Override

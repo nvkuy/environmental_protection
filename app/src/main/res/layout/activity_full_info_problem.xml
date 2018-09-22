@@ -4,8 +4,138 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:weightSum="10"
     tools:context="com.nguyenvukhanhuygmail.environmental_protection.FullInfoProblemActivity">
 
+    <LinearLayout
+        android:padding="7.5dp"
+        android:layout_weight="4"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
 
+        <android.support.v4.view.ViewPager
+            android:id="@+id/vp_image_problem"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_weight="6"
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                android:layout_marginHorizontal="10dp"
+                android:textSize="20sp"
+                android:text="@string/problem_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/problem_describe"
+                android:layout_margin="10dp"
+                android:textSize="17.5sp"
+                android:text="@string/describe_problem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <View
+                android:background="@color/gray"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+
+            <TextView
+                android:id="@+id/location_problem"
+                android:layout_margin="10dp"
+                android:textSize="17.5sp"
+                android:text="Vị trí"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <View
+                android:background="@color/gray"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+
+            <TextView
+                android:id="@+id/post_time"
+                android:layout_margin="10dp"
+                android:textSize="17.5sp"
+                android:text="Ngày gửi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <View
+                android:background="@color/gray"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+
+            <TextView
+                android:textStyle="bold"
+                android:layout_margin="10dp"
+                android:textSize="20sp"
+                android:text="@string/sender_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/user_name"
+                android:layout_margin="10dp"
+                android:textSize="17.5sp"
+                android:text="Tên"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <View
+                android:background="@color/gray"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+
+            <TextView
+                android:id="@+id/user_sex"
+                android:layout_margin="10dp"
+                android:textSize="17.5sp"
+                android:text="Giới tính"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <View
+                android:background="@color/gray"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+
+            <TextView
+                android:id="@+id/user_phone_number"
+                android:layout_margin="10dp"
+                android:textSize="17.5sp"
+                android:text="Số điện thoại"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <View
+                android:background="@color/gray"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+
+            <TextView
+                android:id="@+id/user_location"
+                android:layout_margin="10dp"
+                android:textSize="17.5sp"
+                android:text="Địa chỉ"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>

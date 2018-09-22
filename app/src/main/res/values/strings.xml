@@ -18,6 +18,8 @@
     <string name="add_problem_button">Xác nhận</string>
     <string name="add_problem">Thêm mới vấn đề</string>
     <string name="null_problem">Hiện không có vấn đề nào được ghi nhận</string>
+    <string name="problem_info">Thông tin về vấn đề:</string>
+    <string name="sender_info">Thông tin về người gửi:</string>
     <!--<string name="PickOrTakeDialogMsg">Bạn muốn chụp hay chọn ảnh?</string>-->
     <!--<string name="TakeButton">Chụp ảnh</string>-->
     <!--<string name="PickButton">Chọn ảnh</string>-->

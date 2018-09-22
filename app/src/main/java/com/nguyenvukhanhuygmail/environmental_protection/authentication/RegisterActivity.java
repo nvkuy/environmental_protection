@@ -103,6 +103,11 @@ public class RegisterActivity extends AppCompatActivity {
                     toastMsg("Cập nhật hồ sơ người dùng thất bại!");
                 }
             });
+
+        if (mUser.getAcc_type().equals("Người dân")) {
+            mDatabase.child("uIDs").push().setValue(uID);
+        }
+
     }
 
     private void onButtonClick() {
