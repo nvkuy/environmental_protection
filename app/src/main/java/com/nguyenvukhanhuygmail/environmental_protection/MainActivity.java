@@ -104,8 +104,9 @@ public class MainActivity extends AppCompatActivity {
             uIDs.add(uID);
         }
 
+        DatabaseReference problemRef = dbRef.getRoot().child("Problems");
         for (String uID : uIDs) {
-            dbRef.getRoot().child("Problems").child(uID).addChildEventListener(new ChildEventListener() {
+            problemRef.child(uID).addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                     Problem problem = dataSnapshot.getValue(Problem.class);
@@ -138,6 +139,51 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
+
+//        dbRef.getRoot().child("Problems").addChildEventListener(new ChildEventListener() {
+//            @Override
+//            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//                for (String uID : uIDs) {
+//                    for (DataSnapshot ds : dataSnapshot.child(uID).getChildren()) {
+//                        Problem problem = ds.getValue(Problem.class);
+//                        problemList.add(problem);
+//                        updateRV();
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//                for (String uID : uIDs) {
+//                    for (DataSnapshot ds : dataSnapshot.child(uID).getChildren()) {
+//                        Problem problem = ds.getValue(Problem.class);
+//                        problemList.set(findItem(problem.getImage_code()), problem);
+//                        updateRV();
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+//                for (String uID : uIDs) {
+//                    for (DataSnapshot ds : dataSnapshot.child(uID).getChildren()) {
+//                        Problem problem = ds.getValue(Problem.class);
+//                        problemList.remove(findItem(problem.getImage_code()));
+//                        updateRV();
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//                Log.d("FirebaseErr", databaseError.getMessage());
+//            }
+//        });
 
 //        if (user.getAcc_type().equals("Người dân")) { //nếu đăng nhập dưới quyền người dân
 //            dbRef.getRoot().child("Problems").child(uID).addChildEventListener(new ChildEventListener() {

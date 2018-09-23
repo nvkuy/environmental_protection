@@ -1,10 +1,8 @@
 package com.nguyenvukhanhuygmail.environmental_protection.adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,12 +20,12 @@ import java.util.List;
 public class ViewPaperAdapter extends PagerAdapter {
 
     List<String> image_problem;
-    Activity activity;
+    Context context;
     LayoutInflater inflater;
 
-    public ViewPaperAdapter(List<String> image_problem, Activity activity) {
+    public ViewPaperAdapter(List<String> image_problem, Context context) {
         this.image_problem = image_problem;
-        this.activity = activity;
+        this.context = context;
     }
 
     @Override
@@ -44,10 +42,10 @@ public class ViewPaperAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
 
-        inflater = (LayoutInflater) activity.getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflater = (LayoutInflater) context.getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.viewpaper_item, container, false);
 
-        ImageView imageView = (ImageView) view.findViewById(R.id.image_problem);
+        ImageView imageView = view.findViewById(R.id.image_problem);
 
         Picasso
                 .get()
@@ -58,13 +56,13 @@ public class ViewPaperAdapter extends PagerAdapter {
 
         container.addView(view);
 
-        return view;
+        return imageView;
     }
 
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
 
-        ((ViewPager) container).removeView((View) object);
+        container.removeView((View) object);
 
     }
 }
