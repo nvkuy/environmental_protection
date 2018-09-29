@@ -7,15 +7,16 @@
     android:layout_height="match_parent"
     tools:context="com.nguyenvukhanhuygmail.environmental_protection.MainActivity">
 
-    <android.support.v7.widget.RecyclerView
+    <ListView
+        android:divider="@android:color/transparent"
+        android:dividerHeight="10.0sp"
         android:visibility="visible"
-        android:scrollbars="vertical"
-        android:id="@+id/rv_problems"
+        android:id="@+id/lv_problems"
         android:layout_margin="15dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    </android.support.v7.widget.RecyclerView>
+    </ListView>
 
     <TextView
         android:text="@string/null_problem"
@@ -30,6 +31,7 @@
     </TextView>
 
     <android.support.design.widget.FloatingActionButton
+        android:visibility="gone"
         android:src="@drawable/ic_add_primary_24dp"
         android:layout_margin="15dp"
         android:id="@+id/add_problem"

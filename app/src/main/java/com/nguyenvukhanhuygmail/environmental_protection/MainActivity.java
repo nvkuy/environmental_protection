@@ -6,11 +6,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.animation.AnimationUtils;
-import android.view.animation.LayoutAnimationController;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,10 +21,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.nguyenvukhanhuygmail.environmental_protection.adapter.ProblemAdapter;
+import com.nguyenvukhanhuygmail.environmental_protection.adapter.CardProblemAdapter;
 import com.nguyenvukhanhuygmail.environmental_protection.model.Problem;
 import com.nguyenvukhanhuygmail.environmental_protection.model.User;
-import com.nguyenvukhanhuygmail.environmental_protection.util.RecyclerItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,55 +36,51 @@ public class MainActivity extends AppCompatActivity {
     String uID;
     User user;
 
-    RecyclerView rv_problems;
+    ListView lv_problems;
     TextView tv_null_problem;
     FloatingActionButton add_problem;
 
     List<Problem> problemList = new ArrayList<>();
     List<String> uIDs = new ArrayList<>();
-    ProblemAdapter problemAdapter;
+    CardProblemAdapter cardProblemAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         start();
-        showTvOrRv();
+        showTvOrLv();
         showFullInfoProblem();
     }
 
     private void showFullInfoProblem() {
-        rv_problems.addOnItemTouchListener(new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
+        lv_problems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(View view, int position) {
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Intent i = new Intent(getApplication(), FullInfoProblemActivity.class);
                 i.putExtra("uID", problemList.get(position).getuID());
                 i.putExtra("date", problemList.get(position).getDate());
                 i.putExtra("title", problemList.get(position).getTitle());
                 startActivity(i);
             }
-        }));
+        });
     }
 
-    private void showTvOrRv() {
+    private void showTvOrLv() {
         if (problemList.isEmpty()) {
             tv_null_problem.setVisibility(View.VISIBLE);
-            rv_problems.setVisibility(View.GONE);
+            lv_problems.setVisibility(View.GONE);
         } else {
             tv_null_problem.setVisibility(View.GONE);
-            rv_problems.setVisibility(View.VISIBLE);
+            lv_problems.setVisibility(View.VISIBLE);
         }
     }
 
     private void updateRV(String uID) {
-        showTvOrRv();
-        final LayoutAnimationController controller =
-                AnimationUtils.loadLayoutAnimation(this, R.anim.layout_slide_from_bottom);
-        rv_problems.setLayoutAnimation(controller);
-        problemAdapter = new ProblemAdapter(problemList, user.getAcc_type(), dbRef, sRef, uID);
-        rv_problems.setAdapter(problemAdapter);
-        rv_problems.scheduleLayoutAnimation();
-
+        showTvOrLv();
+//        cardProblemAdapter = new CardProblemAdapter(problemList, user.getAcc_type(), uID, dbRef, sRef, this);
+//        lv_problems.setAdapter(cardProblemAdapter);
+        cardProblemAdapter.notifyDataSetChanged();
     }
 
     private void setupLvProblem() {
@@ -346,8 +339,7 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        rv_problems = (RecyclerView) findViewById(R.id.rv_problems);
-        rv_problems.setLayoutManager(new LinearLayoutManager(this));
+        lv_problems = (ListView) findViewById(R.id.lv_problems);
         tv_null_problem = (TextView) findViewById(R.id.tv_null_problem);
         add_problem = (FloatingActionButton) findViewById(R.id.add_problem);
 
@@ -386,9 +378,12 @@ public class MainActivity extends AppCompatActivity {
                     if (!user.getAcc_type().equals("Người dân")) {
                         add_problem.setVisibility(View.GONE);
                     } else {
+                        add_problem.setVisibility(View.VISIBLE);
                         onAddProblemButtonClick();
                     }
-                    showTvOrRv();
+                    cardProblemAdapter = new CardProblemAdapter(problemList, user.getAcc_type(), uID, dbRef, sRef, getApplicationContext());
+                    lv_problems.setAdapter(cardProblemAdapter);
+                    showTvOrLv();
                     setupLvProblem();
                 } else {
                     toastMsg("Lỗi đăng nhập người dùng");

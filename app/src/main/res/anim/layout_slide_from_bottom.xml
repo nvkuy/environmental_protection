@@ -2,6 +2,6 @@
 <layoutAnimation xmlns:android="http://schemas.android.com/apk/res/android"
     android:animationOrder="normal"
     android:delay="15%"
-    android:animation="@anim/rv_item_slide_from_bottom">
+    android:animation="@anim/lv_item_slide_from_bottom">
 
 </layoutAnimation>
