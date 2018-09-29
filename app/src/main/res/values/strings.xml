@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Chung tay bảo vệ môi trường</string>
+    <string name="app_name">Danang Green</string>
     <string name="register_title">Đăng kí tài khoản mới</string>
     <string name="login_button">Đăng nhập ngay!</string>
     <string name="register_button">Đăng ký ngay!</string>
@@ -21,9 +21,6 @@
     <string name="problem_info">Thông tin về vấn đề:</string>
     <string name="sender_info">Thông tin về người gửi:</string>
 
-    <string name="title_activity_fullscreen_image">FullscreenImageActivity</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
     <!--<string name="PickOrTakeDialogMsg">Bạn muốn chụp hay chọn ảnh?</string>-->
     <!--<string name="TakeButton">Chụp ảnh</string>-->
     <!--<string name="PickButton">Chọn ảnh</string>-->
