@@ -12,17 +12,28 @@ public class Problem {
     private String date;
     private String location;
     private int image_num;
+    private String uID;
 
     public Problem() {
     }
 
     public Problem(String title, String describe, String date, String location, int image_num, String uID) {
+        this.uID = uID;
         this.title = title;
         this.describe = describe;
         this.image_code = uID + date;
         this.date = date;
         this.location = location;
         this.image_num = image_num;
+    }
+
+    public String getuID() {
+        return uID;
+    }
+
+    public Problem setuID(String uID) {
+        this.uID = uID;
+        return this;
     }
 
     public String getImage_code() {

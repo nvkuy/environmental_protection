@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(View view, int position) {
                 Intent i = new Intent(getApplication(), FullInfoProblemActivity.class);
-                i.putExtra("uID", uID);
+                i.putExtra("uID", problemList.get(position).getuID());
                 i.putExtra("date", problemList.get(position).getDate());
                 i.putExtra("title", problemList.get(position).getTitle());
                 startActivity(i);
@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void updateRV() {
+    private void updateRV(String uID) {
         showTvOrRv();
         final LayoutAnimationController controller =
                 AnimationUtils.loadLayoutAnimation(this, R.anim.layout_slide_from_bottom);
@@ -111,21 +111,21 @@ public class MainActivity extends AppCompatActivity {
                 public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                     Problem problem = dataSnapshot.getValue(Problem.class);
                     problemList.add(problem);
-                    updateRV();
+                    updateRV(problem.getuID());
                 }
 
                 @Override
                 public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                     Problem problem = dataSnapshot.getValue(Problem.class);
                     problemList.set(findItem(problem.getImage_code()), problem);
-                    updateRV();
+                    updateRV(problem.getuID());
                 }
 
                 @Override
                 public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
                     Problem problem = dataSnapshot.getValue(Problem.class);
                     problemList.remove(findItem(problem.getImage_code()));
-                    updateRV();
+                    updateRV(problem.getuID());
                 }
 
                 @Override
@@ -383,13 +383,13 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 user = dataSnapshot.getValue(User.class);
                 if (user != null) {
-                    if (user.getAcc_type().equals("Người dân")) {
-                        showTvOrRv();
-                        setupLvProblem();
-                        onAddProblemButtonClick();
-                    } else {
+                    if (!user.getAcc_type().equals("Người dân")) {
                         add_problem.setVisibility(View.GONE);
+                    } else {
+                        onAddProblemButtonClick();
                     }
+                    showTvOrRv();
+                    setupLvProblem();
                 } else {
                     toastMsg("Lỗi đăng nhập người dùng");
                     finish();
