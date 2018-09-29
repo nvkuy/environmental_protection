@@ -20,6 +20,10 @@
     <string name="null_problem">Hiện không có vấn đề nào được ghi nhận</string>
     <string name="problem_info">Thông tin về vấn đề:</string>
     <string name="sender_info">Thông tin về người gửi:</string>
+
+    <string name="title_activity_fullscreen_image">FullscreenImageActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
     <!--<string name="PickOrTakeDialogMsg">Bạn muốn chụp hay chọn ảnh?</string>-->
     <!--<string name="TakeButton">Chụp ảnh</string>-->
     <!--<string name="PickButton">Chọn ảnh</string>-->

@@ -4,9 +4,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -20,7 +20,9 @@ import com.google.firebase.storage.StorageReference;
 import com.nguyenvukhanhuygmail.environmental_protection.adapter.ViewPaperAdapter;
 import com.nguyenvukhanhuygmail.environmental_protection.model.Problem;
 import com.nguyenvukhanhuygmail.environmental_protection.model.User;
+import com.nguyenvukhanhuygmail.environmental_protection.util.ClickableViewPager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FullInfoProblemActivity extends AppCompatActivity {
@@ -28,10 +30,10 @@ public class FullInfoProblemActivity extends AppCompatActivity {
     String uID, date, title;
 
     TextView tv_problem_describe, tv_problem_location, tv_problem_post_time, tv_user_name, tv_user_sex, tv_user_phone_num, tv_user_location;
-    ViewPager vp_image_problem;
+    ClickableViewPager vp_image_problem;
 
     ViewPaperAdapter viewPaperAdapter;
-    List<String> image_url;
+    List<String> image_url = new ArrayList<>();
 
     User user;
     Problem problem;
@@ -45,11 +47,21 @@ public class FullInfoProblemActivity extends AppCompatActivity {
         setContentView(R.layout.activity_full_info_problem);
         start();
         getData();
+        showFullScreenImage();
+    }
+
+    private void showFullScreenImage() {
+        vp_image_problem.setOnItemClickListener(new ClickableViewPager.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                startActivity(new Intent(getApplication(), FullscreenImageActivity.class).putExtra("image_url", image_url.get(position)));
+                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+            }
+        });
     }
 
     private void updateVP() {
-        viewPaperAdapter = new ViewPaperAdapter(image_url, this);
-        vp_image_problem.setAdapter(viewPaperAdapter);
+        viewPaperAdapter.notifyDataSetChanged();
     }
 
     private void getData() {
@@ -82,7 +94,7 @@ public class FullInfoProblemActivity extends AppCompatActivity {
                 tv_problem_post_time.setText("Thời điểm báo cáo vấn đề: " + problem.getDate());
 
                 for (int i = 1; i <= problem.getImage_num(); i++) {
-                    storageRef.child("ProblemImage").child(uID).child(String.valueOf(i)).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    storageRef.child("ProblemImage").child(problem.getImage_code()).child(String.valueOf(i)).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
                             image_url.add(String.valueOf(uri));
@@ -91,7 +103,7 @@ public class FullInfoProblemActivity extends AppCompatActivity {
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception exception) {
-
+                            toastMsg("Đã xảy ra lỗi khi lấy hình ảnh từ server!");
                         }
                     });
                 }
@@ -103,6 +115,10 @@ public class FullInfoProblemActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void toastMsg(String msg) {
+        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
     }
 
     private void start() {
@@ -126,7 +142,10 @@ public class FullInfoProblemActivity extends AppCompatActivity {
         tv_user_location = (TextView) findViewById(R.id.user_location);
         tv_user_phone_num = (TextView) findViewById(R.id.user_phone_number);
         tv_user_sex = (TextView) findViewById(R.id.user_sex);
-        vp_image_problem = (ViewPager) findViewById(R.id.vp_image_problem);
+        vp_image_problem = (ClickableViewPager) findViewById(R.id.vp_image_problem);
+
+        viewPaperAdapter = new ViewPaperAdapter(image_url, this);
+        vp_image_problem.setAdapter(viewPaperAdapter);
 
     }
 }

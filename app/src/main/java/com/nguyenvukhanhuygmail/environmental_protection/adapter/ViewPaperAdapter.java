@@ -6,6 +6,8 @@ import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import com.nguyenvukhanhuygmail.environmental_protection.R;
@@ -21,7 +23,6 @@ public class ViewPaperAdapter extends PagerAdapter {
 
     List<String> image_problem;
     Context context;
-    LayoutInflater inflater;
 
     public ViewPaperAdapter(List<String> image_problem, Context context) {
         this.image_problem = image_problem;
@@ -42,8 +43,7 @@ public class ViewPaperAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
 
-        inflater = (LayoutInflater) context.getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.viewpaper_item, container, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.viewpaper_item, container, false);
 
         ImageView imageView = view.findViewById(R.id.image_problem);
 
@@ -56,7 +56,10 @@ public class ViewPaperAdapter extends PagerAdapter {
 
         container.addView(view);
 
-        return imageView;
+        Animation animation = AnimationUtils.loadAnimation(context, R.anim.lv_item_slide_from_bottom);
+        view.startAnimation(animation);
+
+        return view;
     }
 
     @Override

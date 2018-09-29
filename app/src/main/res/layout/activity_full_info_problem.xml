@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp">
 
-        <android.support.v4.view.ViewPager
+        <com.nguyenvukhanhuygmail.environmental_protection.util.ClickableViewPager
             android:id="@+id/vp_image_problem"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
